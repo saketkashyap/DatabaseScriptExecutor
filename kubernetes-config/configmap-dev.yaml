@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: dbexecutor
+ namespace: dev
+
+data:
+ world.cup.winner: Australia
+ spring.liquibase.change-log: classpath:db/changelog/liquibase-changelog.xml
+ 
+ 
+ 

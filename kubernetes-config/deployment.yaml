@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  name: dbscriptexecutor
+  namespace: dev
+  labels:
+    app: dbexec
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dbexec
+  template:
+    metadata:
+      labels:
+        app: dbexec
+    spec:
+      containers:
+        - name: dbexec
+          image: docker.io/sakkashy/dbexec:latest
+          ports:
+          - name: nfs
+            containerPort: 8410
+            protocol: TCP
+          env:
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-connection-details
+                  key: oracle.db.user
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-connection-details
+                  key: oracle.db.password
+            - name: spring.datasource.url
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-connection-details
+                  key: oracle.db.url     
+                  
+          envFrom:
+          - configMapRef:
+                   name: dbexecutor        
+                  

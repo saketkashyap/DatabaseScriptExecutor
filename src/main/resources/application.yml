@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: dbexec
+  liquibase:
+    change-log: classpath:db/changelog/liquibase-changelog.xml
+ 
+  
+server:
+  port: 8410
+            
